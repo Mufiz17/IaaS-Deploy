@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Register</title>
+</head>
+
+<body class="bg-light d-flex align-items-center justify-content-center" style="height: 100vh;">
+
+  <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+    <h4 class="text-center mb-4">Register</h4>
+    <form onsubmit="register(event)">
+      <!-- Email input -->
+      <div class="form-outline mb-3">
+        <label class="form-label" for="regEmail">Email address</label>
+        <input type="email" id="regEmail" class="form-control" placeholder="Enter your email" required />
+      </div>
+
+      <!-- Password input -->
+      <div class="form-outline mb-3">
+        <label class="form-label" for="regPassword">Password</label>
+        <input type="password" id="regPassword" class="form-control" placeholder="Create a password" required />
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 mb-2">Register</button>
+      <p class="text-center small">Already have an account? <a href="login.html" class="link-primary">Login</a></p>
+    </form>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4arTVTvyvvavf777znj5hbAove1WkCak",
+      authDomain: "iaas-51160.firebaseapp.com",
+      projectId: "iaas-51160",
+      storageBucket: "iaas-51160.firebasestorage.app",
+      messagingSenderId: "319878274724",
+      appId: "1:319878274724:web:f9ff4d659c14a41fcc9031",
+      measurementId: "G-PQGHEJ9FG3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.register = async function (event) {
+      event.preventDefault();
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        alert("Registration successful! You can now login.");
+        window.location.href = "login.html"; // arahkan ke halaman login
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    }
+  </script>
+</body>
+
+</html>
